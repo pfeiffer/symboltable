@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>SymbolTable</title>
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="all">
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <h1>symboltable</h1>
+            <ul>
+                <li><a href="api/index.html">API</a></li>
+                <li><a href="http://github.com/mjijackson/symboltable/issues">Issues</a></li>
+                <li><a href="http://github.com/mjijackson/symboltable">Code</a></li>
+                <li><a href="index.html">Home</a></li>
+            </ul>
+        </div>
+        <div id="content"><p><strong>SymbolTable</strong> is a handy little Ruby class that was conceived from the union of
+<a href="http://ruby-doc.org/core/classes/Hash.html">Hash</a> and <a href="http://ruby-doc.org/core/classes/Symbol.html">Symbol</a>. SymbolTable directly extends Hash, but it stores all keys
+internally as symbols. Any key that cannot be converted to a Symbol is not
+valid.</p>
+
+<p>While this may seem restrictive, it does have the nice side effect of making
+all keys slightly more memorable and usable. For example, values may be set
+and retrieved using any key that resolves to the same symbol.</p>
+
+<pre><code>h = Hash.new
+h[:a] = 1
+h[:a]       # =&gt; 1
+h['a']      # =&gt; nil
+h.a         # =&gt; NoMethodError: undefined method `a' for {}:Hash
+
+require 'symboltable'
+
+t = SymbolTable.new
+t[:a] = 1
+t[:a]       # =&gt; 1
+t['a']      # =&gt; 1
+t.a         # =&gt; 1
+t.b = 2     # =&gt; 2
+</code></pre>
+
+<p>Also, because SymbolTable subclasses Hash, you get all the nice methods of Hash
+for free.</p>
+
+<pre><code>t.keys      # =&gt; [:a, :b]
+t.values    # =&gt; [1, 2]
+
+t.merge!('c' =&gt; 3, :d =&gt; 4)
+t.keys      # =&gt; [:a, :b, :c, :d]
+t.values    # =&gt; [1, 2, 3, 4]
+
+t.each do |k, v|
+  puts "#{k} = #{v}"
+end
+</code></pre>
+
+<p>You get the idea. This kind of data structure is mainly useful for large
+configuration objects and the like, where you want to store a bunch of data and
+you don&rsquo;t want to have to remember later how you stored it.</p>
+
+<h2>Why?</h2>
+
+<p>Mainly just for fun, and because I sometimes miss the automatic and ubiquitous
+type conversion you get in <a href="http://php.net/">PHP</a>.</p>
+
+<h2>Installation</h2>
+
+<p>Using <a href="http://rubygems.org/">RubyGems</a>:</p>
+
+<pre><code>$ sudo gem install symboltable
+</code></pre>
+
+<p>From a local copy:</p>
+
+<pre><code>$ git clone git://github.com/mjijackson/symboltable.git
+$ cd symboltable
+$ rake package &amp;&amp; sudo rake install
+</code></pre>
+</div>
+        <div id="footer">
+            <p><a href="license.html" rel="license">Copyright</a> &copy; 2010 <a href="http://mjijackson.com/about" rel="me author">Michael Jackson</a></p>
+        </div>
+    </div>
+</body>
+
+</html>
